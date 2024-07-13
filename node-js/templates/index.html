@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Message</title>
+</head>
+<body>
+    <h1>Send a Message</h1>
+    <form id="messageForm">
+        <input type="text" id="message" placeholder="Enter your message">
+        <button type="submit">Send</button>
+    </form>
+    <a href="/events-page">View Messages</a>
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+            fetch('/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({message: message})
+            }).then(response => response.json())
+              .then(data => console.log(data));
+        });
+    </script>
+</body>
+</html>

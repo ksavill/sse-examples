@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Messages</title>
+</head>
+<body>
+    <h1>Event Messages</h1>
+    <ul id="messages"></ul>
+    <script>
+        // Create a new EventSource instance connected to the /events endpoint
+        const eventSource = new EventSource('/events');
+
+        // Listen for messages from the server
+        eventSource.onmessage = function(event) {
+            // Extract the message from the event data
+            const message = event.data;
+
+            // Create a new list item element and set its content
+            const messageElement = document.createElement('li');
+            messageElement.textContent = message;
+
+            // Append the new list item to the 'messages' list
+            document.getElementById('messages').appendChild(messageElement);
+        };
+
+        // Optional: Listen for errors
+        eventSource.onerror = function(error) {
+            console.error('EventSource failed:', error);
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>
